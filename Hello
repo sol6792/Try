@@ -1,21 +1,19 @@
-String fileName = 'MY_FILE.txt';
-String fileContent = 'Hello World';
-String targetURL = 'https://your.target.com/api';
-String separationString = 'A_RANDOM_STRING';
- 
-// assemble the body payload
-String header = '--' + separationString + '\nContent-Disposition: form-data; name="file"; filename="' + fileName + '"\nContent-Type: application/octet-stream\n\n';
-String body = EncodingUtil.base64Encode(fileContent) + '\n';
-String footer = '--' + separationString + '--';
-String bodyPayload = header + body + footer;
- 
-// send out the request
-HttpRequest req = new HttpRequest();
-req.setHeader('Content-Type', 'multipart/form-data; boundary=' + separationString);
-req.setHeader('Content-Length', String.valueof(bodyPayload));
-req.setMethod('POST');
-req.setEndpoint(targetURL);
-req.setBody(bodyPayload);
- 
-Http http = new Http();
-http.send(req);
+<?php
+// define variables and set to empty values
+$name = $email = $gender = $comment = $website = "";
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  $name = test_input($_POST["name"]);
+  $email = test_input($_POST["email"]);
+  $website = test_input($_POST["website"]);
+  $comment = test_input($_POST["comment"]);
+  $gender = test_input($_POST["gender"]);
+}
+
+function test_input($data) {
+  $data = trim($data);
+  $data = stripslashes($data);
+  $data = htmlspecialchars($data);
+  return $data;
+}
+?>
